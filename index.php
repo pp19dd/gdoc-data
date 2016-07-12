@@ -54,4 +54,8 @@ if( file_exists($filename) ) {
     $data = array();
 }
 
-printf( "%s(%s);", $_GET['callback'], json_encode($data) );
+if( $_GET['callback'] === "raw_json" ) {
+    echo json_encode($data);
+} else {
+    printf( "%s(%s);", $_GET['callback'], json_encode($data) );
+}
