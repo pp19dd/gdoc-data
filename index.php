@@ -30,7 +30,7 @@ if( isset($_GET['sync']) ) {
     $data = file_get_contents( $actual_fetch_url );
 
     if( !@file_put_contents( $filename, $data ) ) {
-        echo "Error: unable to write to file";
+        echo "Error: unable to write to file {$filename}";
         die;
     }
 
