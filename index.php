@@ -9,6 +9,28 @@ if( !isset( $projects[$project]) ) die( "Error: can't find project in config" );
 
 // PROGRAM_FOLDER requires trailing slash
 $filename = PROGRAM_FOLDER . "projects/" . md5($project) . ".csv";
+$filename_count = PROGRAM_FOLDER . "projects/" . md5($project) . ".count";
+
+// ==================================
+// MODE 0: just let someone else know
+// ==================================
+if( isset($_GET['cron-request']) ) {
+
+    if( !file_exists($filename_count) ) {
+        $count = 0;
+    } else {
+        $count = intval(trim(file_get_contents($filename_count)));
+    }
+
+    $count++;
+
+    // external cron-based program will handle the fetching and
+    // reset the count to 0 when done
+    file_put_contents($filename_count, $count);
+
+    echo "Update request flagged, count = {$count}";
+    die;
+}
 
 // ==================================
 // MODE 1: synchronize data from gdoc
